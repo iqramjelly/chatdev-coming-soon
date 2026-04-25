@@ -12,18 +12,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #07070d;
-      --bg2: #0d0d18;
-      --surface: #12121f;
-      --border: rgba(120, 100, 255, 0.12);
-      --purple: #7c5cfc;
-      --purple-soft: #a78bfa;
-      --cyan: #22d3ee;
-      --cyan-soft: #67e8f9;
-      --green: #4ade80;
-      --text: #f0f0ff;
-      --muted: rgba(240, 240, 255, 0.45);
-      --tag-bg: rgba(124, 92, 252, 0.12);
+      --bg: #000000;
+      --surface: #0a0a0a;
+      --surface2: #111111;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.12);
+      --green: #62DE61;
+      --green-dim: #DDFFDC;
+      --green-mid: #80EE64;
+      --green-dark: #09AF58;
+      --text: #DDFFDC;
+      --text-secondary: rgba(221,255,220,0.55);
+      --text-muted: rgba(221,255,220,0.35);
     }
 
     html { scroll-behavior: smooth; }
@@ -35,43 +35,19 @@
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       overflow-x: hidden;
+      font-weight: 500;
+      letter-spacing: -0.022em;
     }
 
-    /* ─── ambient glow layers ─── */
+    /* ─── subtle noise/grain texture ─── */
     body::before {
       content: '';
       position: fixed;
-      top: -30vh;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120vw;
-      height: 80vh;
-      background: radial-gradient(ellipse at 50% 0%, rgba(124,92,252,0.18) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: -20vh;
-      right: -20vw;
-      width: 80vw;
-      height: 60vh;
-      background: radial-gradient(ellipse at 80% 80%, rgba(34,211,238,0.10) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ─── grid overlay ─── */
-    .grid-bg {
-      position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(120,100,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(120,100,255,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
     }
 
     /* ─── nav ─── */
@@ -82,10 +58,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 2.5rem;
-      background: rgba(7,7,13,0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      padding: 0 2.5rem;
+      height: 56px;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
@@ -93,34 +70,56 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 1.15rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: var(--text);
       text-decoration: none;
     }
 
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, var(--purple), var(--cyan));
-      border-radius: 7px;
+    .logo-mark {
+      width: 24px;
+      height: 24px;
+      background: var(--green);
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
     }
 
-    .nav-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      background: var(--tag-bg);
-      border: 1px solid rgba(124,92,252,0.3);
-      color: var(--purple-soft);
-      padding: 0.25rem 0.65rem;
-      border-radius: 100px;
-      letter-spacing: 0.05em;
+    .logo-mark svg {
+      width: 14px;
+      height: 14px;
     }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+      letter-spacing: -0.02em;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    .nav-cta {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--green);
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      letter-spacing: -0.01em;
+    }
+    .nav-cta:hover { opacity: 0.85; }
 
     /* ─── hero ─── */
     .hero {
@@ -132,382 +131,610 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 1.5rem 4rem;
+      padding: 8rem 1.5rem 5rem;
     }
 
-    .eyebrow {
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--cyan);
-      background: rgba(34,211,238,0.08);
-      border: 1px solid rgba(34,211,238,0.2);
-      padding: 0.4rem 1rem;
-      border-radius: 100px;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.6s ease both;
+      color: var(--green);
+      border: 1px solid rgba(98, 222, 97, 0.25);
+      padding: 0.35rem 0.85rem;
+      border-radius: 4px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.5s ease both;
+      font-weight: 500;
     }
 
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
+    .badge-dot {
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      background: var(--cyan);
-      animation: pulse 1.8s ease-in-out infinite;
+      background: var(--green);
+      animation: blink 2s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-size: clamp(3.2rem, 8.5vw, 6.5rem);
       font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.0;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-
-    .wordmark {
-      background: linear-gradient(135deg, var(--purple-soft) 0%, var(--cyan-soft) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .coming-line {
-      display: block;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      margin-bottom: 1.75rem;
+      animation: fadeUp 0.5s 0.08s ease both;
       color: var(--text);
+    }
+
+    h1 .accent {
+      color: var(--green);
     }
 
     .subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
-      color: var(--muted);
-      max-width: 600px;
-      line-height: 1.6;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.65;
       font-weight: 400;
       margin-bottom: 3rem;
-      animation: fadeUp 0.6s 0.2s ease both;
+      animation: fadeUp 0.5s 0.16s ease both;
+      letter-spacing: -0.01em;
     }
 
     /* ─── email capture ─── */
-    .capture-form {
+    .capture-wrap {
       display: flex;
       gap: 0.5rem;
-      max-width: 460px;
+      max-width: 420px;
       width: 100%;
-      margin-bottom: 3.5rem;
-      animation: fadeUp 0.6s 0.3s ease both;
+      margin-bottom: 4rem;
+      animation: fadeUp 0.5s 0.24s ease both;
     }
 
-    .capture-form input {
+    .capture-wrap input {
       flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--surface2);
+      border: 1px solid var(--border-strong);
       color: var(--text);
       font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      padding: 0.85rem 1.2rem;
-      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 400;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.15s;
+      letter-spacing: -0.01em;
     }
-    .capture-form input::placeholder { color: var(--muted); }
-    .capture-form input:focus { border-color: rgba(124,92,252,0.5); }
+    .capture-wrap input::placeholder { color: var(--text-muted); }
+    .capture-wrap input:focus { border-color: rgba(98,222,97,0.4); }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--purple), #5b21b6);
-      color: #fff;
+      background: var(--green);
+      color: #000;
       font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 600;
-      padding: 0.85rem 1.5rem;
-      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
       white-space: nowrap;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: opacity 0.15s;
+      letter-spacing: -0.01em;
     }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:hover { opacity: 0.85; }
 
-    /* ─── feature pills ─── */
-    .features {
+    /* ─── stat row ─── */
+    .stat-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 3rem;
       justify-content: center;
-      max-width: 600px;
-      animation: fadeUp 0.6s 0.4s ease both;
-    }
-
-    .feature-pill {
-      display: flex;
       align-items: center;
-      gap: 0.4rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.8rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 100px;
+      margin-bottom: 5rem;
+      animation: fadeUp 0.5s 0.3s ease both;
+      flex-wrap: wrap;
+      gap: 2rem 3rem;
     }
 
-    .feature-pill .icon {
-      font-size: 0.9rem;
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 0.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--border-strong);
     }
 
     /* ─── terminal card ─── */
     .terminal-wrap {
       position: relative;
       z-index: 1;
-      max-width: 680px;
-      margin: 0 auto 6rem;
+      max-width: 640px;
+      margin: 0 auto 7rem;
       padding: 0 1.5rem;
-      animation: fadeUp 0.6s 0.5s ease both;
+      animation: fadeUp 0.5s 0.35s ease both;
     }
 
     .terminal {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 0 60px rgba(124,92,252,0.1), 0 0 120px rgba(34,211,238,0.05);
     }
 
     .terminal-bar {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.9rem 1.2rem;
-      background: rgba(18,18,31,0.8);
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
       border-bottom: 1px solid var(--border);
     }
 
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot.red { background: #ff5f57; }
-    .dot.yellow { background: #ffbd2e; }
-    .dot.green { background: #28c840; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.red { background: #3a3a3a; }
+    .dot.yellow { background: #3a3a3a; }
+    .dot.green-dot { background: #3a3a3a; }
 
     .terminal-title {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin: 0 auto;
+      letter-spacing: 0;
     }
 
     .terminal-body {
-      padding: 1.5rem 1.5rem;
+      padding: 1.4rem 1.4rem;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      line-height: 1.9;
+      font-size: 0.8rem;
+      line-height: 2;
     }
 
-    .t-muted { color: var(--muted); }
-    .t-purple { color: var(--purple-soft); }
-    .t-cyan { color: var(--cyan); }
+    .t-dim { color: var(--text-muted); }
     .t-green { color: var(--green); }
-    .t-white { color: var(--text); }
+    .t-bright { color: var(--text); }
+    .t-mid { color: var(--green-mid); }
 
+    .t-prompt { color: var(--text-secondary); }
     .t-prompt::before {
-      content: '$ ';
-      color: var(--purple-soft);
+      content: '→ ';
+      color: var(--green-dark);
     }
 
-    /* ─── features grid ─── */
+    /* ─── divider ─── */
+    .divider {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      border-top: 1px solid var(--border);
+      margin-bottom: 6rem;
+    }
+
+    /* ─── features section ─── */
     .section {
       position: relative;
       z-index: 1;
       max-width: 1100px;
-      margin: 0 auto 6rem;
+      margin: 0 auto 7rem;
       padding: 0 1.5rem;
     }
 
-    .section-label {
-      text-align: center;
+    .section-eyebrow {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--purple-soft);
-      margin-bottom: 1rem;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
     }
 
     .section-title {
-      text-align: center;
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 3.5rem;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: var(--text);
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .card:hover {
-      border-color: rgba(124,92,252,0.3);
-      transform: translateY(-2px);
-    }
-
-    .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 1.1rem;
-    }
-    .icon-purple { background: rgba(124,92,252,0.15); }
-    .icon-cyan   { background: rgba(34,211,238,0.12); }
-    .icon-green  { background: rgba(74,222,128,0.12); }
-    .icon-orange { background: rgba(251,146,60,0.12); }
-
-    .card h3 {
+    .section-sub {
       font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 400;
       letter-spacing: -0.01em;
+      margin-bottom: 3.5rem;
+      max-width: 480px;
     }
 
-    .card p {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.6;
+    /* ─── products grid (modal-style) ─── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
     }
+
+    .product-card {
+      padding: 1.75rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .product-card:hover { background: var(--surface2); }
+
+    .product-card:nth-child(3),
+    .product-card:nth-child(6) { border-right: none; }
+
+    .product-card:nth-child(4),
+    .product-card:nth-child(5),
+    .product-card:nth-child(6) { border-bottom: none; }
+
+    .product-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 1rem;
+      color: var(--green);
+    }
+
+    .product-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .product-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .product-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+    }
+
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      color: var(--green);
+      text-decoration: none;
+      margin-top: 0.85rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      transition: opacity 0.15s;
+    }
+    .product-link:hover { opacity: 0.7; }
 
     /* ─── countdown ─── */
-    .countdown-wrap {
+    .countdown-section {
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 4rem 1.5rem 6rem;
+      padding: 5rem 1.5rem 7rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 6rem;
+      background: var(--surface);
+    }
+
+    .countdown-label-top {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    .countdown-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .countdown-sub {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 3rem;
     }
 
     .countdown-grid {
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-top: 2.5rem;
+      gap: 1px;
+      background: var(--border);
+      max-width: 480px;
+      margin: 0 auto;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .countdown-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: var(--bg);
       padding: 1.5rem 2rem;
+      flex: 1;
       min-width: 100px;
     }
 
     .countdown-num {
-      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--purple-soft), var(--cyan-soft));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: -0.04em;
+      color: var(--green);
     }
 
-    .countdown-label {
-      font-size: 0.7rem;
+    .countdown-sub-label {
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-top: 0.3rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-family: 'JetBrains Mono', monospace;
     }
+
+    /* ─── social proof ─── */
+    .quote-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto 7rem;
+      padding: 0 1.5rem;
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .quote-card {
+      background: var(--bg);
+      padding: 1.75rem;
+      transition: background 0.15s;
+    }
+    .quote-card:hover { background: var(--surface2); }
+
+    .quote-text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 400;
+      margin-bottom: 1.1rem;
+      letter-spacing: -0.005em;
+    }
+
+    .quote-text::before { content: '"'; color: var(--green); }
+    .quote-text::after { content: '"'; color: var(--green); }
+
+    .quote-author {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .quote-author span {
+      color: var(--text-secondary);
+    }
+
+    /* ─── CTA section ─── */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 7rem;
+      padding: 0 1.5rem;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+
+    .cta-sub {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .btn-secondary:hover { border-color: rgba(98,222,97,0.35); color: var(--green); }
 
     /* ─── footer ─── */
     footer {
       position: relative;
       z-index: 1;
-      text-align: center;
-      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
       border-top: 1px solid var(--border);
-      font-size: 0.8rem;
-      color: var(--muted);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: -0.02em;
+    }
+
+    .footer-logo-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
     }
 
     footer a {
-      color: var(--muted);
+      color: var(--text-muted);
       text-decoration: none;
+      transition: color 0.15s;
     }
-    footer a:hover { color: var(--text); }
+    footer a:hover { color: var(--text-secondary); }
 
     /* ─── animations ─── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ─── responsive ─── */
-    @media (max-width: 600px) {
-      nav { padding: 1rem 1.25rem; }
-      .capture-form { flex-direction: column; }
-      .btn-primary { width: 100%; text-align: center; }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .product-card { border-right: none; }
+      .product-card:nth-child(n) { border-bottom: 1px solid var(--border); }
+      .product-card:last-child { border-bottom: none; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .stat-divider { display: none; }
+      .capture-wrap { flex-direction: column; }
+      .btn-primary { width: 100%; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
 <body>
-  <div class="grid-bg"></div>
 
   <!-- NAV -->
   <nav>
     <a href="/" class="logo">
-      <div class="logo-icon">◆</div>
+      <div class="logo-mark">
+        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="4" height="4" fill="#000" rx="0.5"/>
+          <rect x="8" y="2" width="4" height="4" fill="#000" rx="0.5"/>
+          <rect x="2" y="8" width="4" height="4" fill="#000" rx="0.5"/>
+          <rect x="8" y="8" width="4" height="4" fill="#000" rx="0.5"/>
+        </svg>
+      </div>
       chat.dev
     </a>
-    <span class="nav-badge">COMING SOON</span>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Docs</a>
+      <a href="#" class="nav-link">Pricing</a>
+      <a href="#" class="nav-link">Blog</a>
+      <a href="#" class="nav-cta">Get early access</a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="eyebrow">
-      <div class="pulse-dot"></div>
-      Something big is loading...
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Coming soon
     </div>
 
-    <h1>
-      <span class="wordmark">chat.dev</span><br>
-      <span class="coming-line">is coming.</span>
-    </h1>
+    <h1>AI infrastructure<br>developers <span class="accent">love.</span></h1>
 
     <p class="subtitle">
-      Deploy, monitor, and manage AI agents serverlessly —
-      the cloud platform built for the agentic era.
+      Deploy, monitor, and scale AI agents serverlessly.
+      Built for the agentic era — no servers, no ops, just code.
     </p>
 
-    <form class="capture-form" onsubmit="handleSubmit(event)">
-      <input type="email" id="email-input" placeholder="you@company.com" required />
-      <button type="submit" class="btn-primary">Notify me</button>
-    </form>
+    <div class="capture-wrap">
+      <input type="email" id="email-input" placeholder="you@company.com" />
+      <button class="btn-primary" onclick="handleSubmit()">Join waitlist</button>
+    </div>
 
-    <div class="features">
-      <div class="feature-pill"><span class="icon">⚡</span> Serverless agents</div>
-      <div class="feature-pill"><span class="icon">🔭</span> Real-time monitoring</div>
-      <div class="feature-pill"><span class="icon">🔗</span> REST & SDK</div>
-      <div class="feature-pill"><span class="icon">🛡</span> Zero infra management</div>
-      <div class="feature-pill"><span class="icon">📊</span> Dataset & model tools</div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">&lt; 5s</div>
+        <div class="stat-label">Deploy time</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Servers to manage</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Scale ceiling</div>
+      </div>
     </div>
   </section>
 
@@ -517,98 +744,183 @@
       <div class="terminal-bar">
         <div class="dot red"></div>
         <div class="dot yellow"></div>
-        <div class="dot green"></div>
-        <span class="terminal-title">chatdev-cli — bash</span>
+        <div class="dot green-dot"></div>
+        <span class="terminal-title">chat.dev — cli</span>
       </div>
       <div class="terminal-body">
-        <div class="t-prompt t-white">npm install -g @chatdev/cli</div>
-        <div class="t-muted"># Installing ChatDev CLI...</div>
-        <div class="t-green">✔ chatdev/cli@1.0.0 installed</div>
+        <div><span class="t-dim">$</span> <span class="t-bright">npm install -g @chatdev/cli</span></div>
+        <div class="t-dim"># Installing...</div>
+        <div class="t-green">✓ @chatdev/cli@1.0.0 installed</div>
         <br>
-        <div class="t-prompt t-white">chatdev init my-first-agent</div>
-        <div class="t-cyan">→ Creating agent workspace...</div>
-        <div class="t-cyan">→ Configuring serverless runtime...</div>
-        <div class="t-green">✔ Agent ready. Run: chatdev deploy</div>
+        <div class="t-prompt t-bright">chatdev init research-agent</div>
+        <div class="t-mid">  Creating agent workspace</div>
+        <div class="t-mid">  Configuring serverless runtime</div>
+        <div class="t-green">✓ Ready. Run chatdev deploy</div>
         <br>
-        <div class="t-prompt t-white">chatdev deploy</div>
-        <div class="t-muted"># Deploying to chat.dev cloud...</div>
-        <div class="t-purple">⬡ Endpoint: https://agents.chat.dev/my-first-agent</div>
-        <div class="t-green">✔ Live in 4.2s. Zero servers configured.</div>
+        <div class="t-prompt t-bright">chatdev deploy</div>
+        <div class="t-dim"># Building and deploying...</div>
+        <div class="t-mid">  https://agents.chat.dev/research-agent</div>
+        <div class="t-green">✓ Live in 3.8s. Zero infra configured.</div>
       </div>
     </div>
   </div>
 
-  <!-- FEATURES -->
+  <!-- PRODUCTS -->
   <section class="section">
-    <div class="section-label">Built for builders</div>
-    <h2 class="section-title">Everything your agents need.<br>Nothing you don't.</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon icon-purple">⚡</div>
-        <h3>Serverless Deploy</h3>
-        <p>Push your agent code and it's live in seconds. No Kubernetes, no Docker configs, no ops headaches. We handle the runtime.</p>
+    <div class="section-eyebrow">Platform</div>
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:3rem;">
+      <div>
+        <h2 class="section-title" style="margin-bottom:0.5rem">Everything your agents need.</h2>
+        <p class="section-sub" style="margin-bottom:0">One platform. Every primitive. No ops.</p>
       </div>
-      <div class="card">
-        <div class="card-icon icon-cyan">🔭</div>
-        <h3>Real-Time Monitoring</h3>
-        <p>Observe every invocation, trace every decision, catch every failure — with millisecond telemetry built in from day one.</p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 16L14 22L24 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="product-name">Deploy</div>
+        <div class="product-desc">Push your agent code and it's live in seconds. No containers, no clusters, no Kubernetes — we handle the runtime.</div>
+        <a href="#" class="product-link">Learn more →</a>
       </div>
-      <div class="card">
-        <div class="card-icon icon-green">🧠</div>
-        <h3>Model Management</h3>
-        <p>Finetune, version, and swap models without redeploying. Point your agent at the best model for every task, on the fly.</p>
+
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 4V8M16 24V28M4 16H8M24 16H28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="product-name">Monitor</div>
+        <div class="product-desc">Observe every invocation, trace every decision. Millisecond telemetry built in — catch failures before your users do.</div>
+        <a href="#" class="product-link">Learn more →</a>
       </div>
-      <div class="card">
-        <div class="card-icon icon-orange">📦</div>
-        <h3>Dataset Tools</h3>
-        <p>Collect, label, and manage training data alongside your running agents. The feedback loop — closed, automatically.</p>
+
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="10" width="8" height="12" rx="1" stroke="currentColor" stroke-width="2"/>
+            <rect x="18" y="6" width="8" height="16" rx="1" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="product-name">Scale</div>
+        <div class="product-desc">Auto-scale from zero to thousands of concurrent agents. Pay per second of compute — nothing when idle.</div>
+        <a href="#" class="product-link">Learn more →</a>
       </div>
-      <div class="card">
-        <div class="card-icon icon-purple">🔗</div>
-        <h3>SDK & REST API</h3>
-        <p>Integrate agents into any stack with the ChatDevClient JS/TS SDK, or hit the REST API directly. Works everywhere.</p>
+
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 6L28 12V20L16 26L4 20V12L16 6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M16 14V18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="16" cy="20" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="product-name">Secrets</div>
+        <div class="product-desc">Encrypted secret management baked in. No plaintext env vars, no leaked credentials, no manual rotation.</div>
+        <a href="#" class="product-link">Learn more →</a>
       </div>
-      <div class="card">
-        <div class="card-icon icon-cyan">🛡</div>
-        <h3>Production-Grade</h3>
-        <p>Auto-scaling, zero-downtime deploys, secret management, and rate limiting — the boring stuff done right, so you can ship.</p>
+
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 8H22M10 14H18M10 20H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <rect x="5" y="5" width="22" height="22" rx="2" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="product-name">Models</div>
+        <div class="product-desc">Finetune, version, and swap models without redeploying. Point agents at the best model for every task.</div>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 12H24M8 16H20M8 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="22" r="5" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
+            <path d="M22 22L23.5 23.5L26 20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="product-name">SDK &amp; API</div>
+        <div class="product-desc">JS/TS SDK and REST API. Integrate agents into any stack in minutes — works everywhere Node runs.</div>
+        <a href="#" class="product-link">Learn more →</a>
       </div>
     </div>
   </section>
 
   <!-- COUNTDOWN -->
-  <div class="countdown-wrap">
-    <div class="section-label">The clock is ticking</div>
-    <h2 class="section-title" style="margin-bottom:0">Launch is close.</h2>
+  <div class="countdown-section">
+    <div class="countdown-label-top">Launch window</div>
+    <h2 class="countdown-title">Launch is close.</h2>
+    <p class="countdown-sub">Get early access before we open the doors.</p>
     <div class="countdown-grid">
       <div class="countdown-box">
         <div class="countdown-num" id="days">--</div>
-        <div class="countdown-label">Days</div>
+        <div class="countdown-sub-label">Days</div>
       </div>
-      <div class="countdown-box">
+      <div class="countdown-box" style="border-left:1px solid var(--border);">
         <div class="countdown-num" id="hours">--</div>
-        <div class="countdown-label">Hours</div>
+        <div class="countdown-sub-label">Hours</div>
       </div>
-      <div class="countdown-box">
+      <div class="countdown-box" style="border-left:1px solid var(--border);">
         <div class="countdown-num" id="mins">--</div>
-        <div class="countdown-label">Minutes</div>
+        <div class="countdown-sub-label">Mins</div>
       </div>
-      <div class="countdown-box">
+      <div class="countdown-box" style="border-left:1px solid var(--border);">
         <div class="countdown-num" id="secs">--</div>
-        <div class="countdown-label">Seconds</div>
+        <div class="countdown-sub-label">Secs</div>
       </div>
     </div>
   </div>
 
+  <!-- QUOTES -->
+  <section class="quote-section">
+    <div class="section-eyebrow" style="margin-bottom:1rem">From the community</div>
+    <h2 class="section-title" style="margin-bottom:3rem">Builders are excited.</h2>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <div class="quote-text">Finally an agent platform that doesn't make me think about infrastructure. I just want to ship agents, not manage clusters.</div>
+        <div class="quote-author"><span>@devbuilder</span> · Senior Engineer</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">The serverless model for agents is exactly right. Pay for what you use, scale automatically. This is how it should work.</div>
+        <div class="quote-author"><span>@ml_engineer</span> · AI Researcher</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Monitoring AI agents in production is the hard part. If chat.dev nails observability out of the box, that's the killer feature.</div>
+        <div class="quote-author"><span>@agentdev</span> · Founding Engineer</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ship your first agent<br>in <span style="color:var(--green)">minutes.</span></h2>
+    <p class="cta-sub">Join the waitlist. We're opening early access soon.</p>
+    <div class="cta-buttons">
+      <button class="btn-primary" style="font-size:0.9rem; padding:0.8rem 1.75rem;" onclick="document.getElementById('email-input').focus(); window.scrollTo({top:0,behavior:'smooth'})">Get early access</button>
+      <a href="mailto:hello@chat.dev" class="btn-secondary">Contact us</a>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
-    <p>© 2026 chat.dev — AI Agent Cloud Platform &nbsp;·&nbsp;
+    <div class="footer-logo">
+      <div class="footer-logo-dot"></div>
+      chat.dev
+    </div>
+    <div>© 2026 chat.dev</div>
+    <div class="footer-links">
       <a href="mailto:hello@chat.dev">hello@chat.dev</a>
-    </p>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
   </footer>
 
   <script>
-    // Countdown to a target date ~30 days out
     const target = new Date('2026-05-25T00:00:00Z');
 
     function tick() {
@@ -626,15 +938,13 @@
     tick();
     setInterval(tick, 1000);
 
-    // Email capture (cosmetic for now — logs to console + toast)
-    function handleSubmit(e) {
-      e.preventDefault();
+    function handleSubmit() {
       const email = document.getElementById('email-input').value;
-      const btn = e.target.querySelector('button');
+      if (!email || !email.includes('@')) return;
+      const btn = document.querySelector('.btn-primary');
       btn.textContent = '✓ You\'re on the list';
-      btn.style.background = 'linear-gradient(135deg,#4ade80,#16a34a)';
-      btn.disabled = true;
-      console.log('Waitlist signup:', email);
+      btn.style.opacity = '0.7';
+      btn.style.cursor = 'default';
     }
   </script>
 </body>
